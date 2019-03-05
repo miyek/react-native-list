@@ -3,6 +3,30 @@ import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import { Icon } from 'expo';
 import PropTypes from 'prop-types';
 
+const styles = StyleSheet.create({
+  addNewContainer: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  addNewInput: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 0.5,
+    margin: 10,
+    padding: 10,
+    flex: 1,
+  },
+  addNewButton: {
+    padding: 10,
+    margin: 5
+  },
+  addNewButtonDisabled: {
+    padding: 10,
+    margin: 5,
+    opacity: 0.25
+  }
+});
+
 export class AddNewItem extends React.Component {
   constructor(props) {
     super(props);
@@ -50,27 +74,3 @@ export class AddNewItem extends React.Component {
 AddNewItem.propTypes = {
   onAddNewItem: PropTypes.func
 };
-
-const styles = StyleSheet.create({
-  addNewContainer: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  addNewInput: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 0.5,
-    margin: 10,
-    padding: 10,
-    flex: 1,
-  },
-  addNewButton: {
-    padding: 10,
-    margin: 5
-  },
-  addNewButtonDisabled: {
-    padding: 10,
-    margin: 5,
-    opacity: 0.25
-  }
-});

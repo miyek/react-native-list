@@ -6,10 +6,34 @@ import {
   TouchableOpacity,
   View,
   FlatList,
-  TextInput,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import { AddNewItem } from '../components/AddNewItem';
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    header: {
+      height: 50
+    },
+    titleText: {
+      fontSize: 16,
+      padding: 15,
+      backgroundColor: Colors.headerBackground,
+      color: Colors.headerColor,
+      fontWeight: '600'
+    },
+    button: {
+      marginBottom: 3,
+      backgroundColor: Colors.buttonBackground
+    },
+    buttonText: {
+      padding: 20,
+      color: Colors.buttonColor
+    }
+  })
+;
 
 
 export default class TaskScreen extends React.Component {
@@ -64,28 +88,3 @@ export default class TaskScreen extends React.Component {
     );
   }
 };
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    header: {
-      height: 50
-    },
-    titleText: {
-      fontSize: 16,
-      padding: 15,
-      backgroundColor: Colors.headerBackground,
-      color: Colors.headerColor,
-      fontWeight: '600'
-    },
-    button: {
-      marginBottom: 3,
-      backgroundColor: Colors.buttonBackground
-    },
-    buttonText: {
-      padding: 20,
-      color: Colors.buttonColor
-    }
-  })
-;
