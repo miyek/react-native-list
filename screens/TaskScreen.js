@@ -3,38 +3,28 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   FlatList,
 } from 'react-native';
 import Colors from '../constants/Colors';
-import { AddNewItem } from '../components/AddNewItem';
+import AddNewItem from '../components/AddNewItem';
+import ListItem from '../components/ListItem';
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    header: {
-      height: 50
-    },
-    titleText: {
-      fontSize: 16,
-      padding: 15,
-      backgroundColor: Colors.headerBackground,
-      color: Colors.headerColor,
-      fontWeight: '600'
-    },
-    button: {
-      marginBottom: 3,
-      backgroundColor: Colors.buttonBackground
-    },
-    buttonText: {
-      padding: 20,
-      color: Colors.buttonColor
-    }
-  })
-;
-
+  container: {
+    flex: 1,
+  },
+  header: {
+    height: 50
+  },
+  titleText: {
+    fontSize: 16,
+    padding: 15,
+    backgroundColor: Colors.headerBackground,
+    color: Colors.headerColor,
+    fontWeight: '600'
+  }
+});
 
 export default class TaskScreen extends React.Component {
   static navigationOptions = {
@@ -56,14 +46,29 @@ export default class TaskScreen extends React.Component {
     ];
 
     this.state = {
+      enable: true,
       items
     };
   }
 
+  setScrollEnabled(enable) {
+    console.log(enable);
+    this.setState({
+      enable,
+    });
+  }
+
   handleNewItem(item) {
     this.setState({
-      items: [ item, ...this.state.items]
+      items: [item, ...this.state.items]
     })
+  }
+
+  handleRemoveItem(key) {
+    const items = this.state.items.filter(item => item.key !== key);
+    this.setState(({
+      items
+    }))
   }
 
   render() {
@@ -74,17 +79,16 @@ export default class TaskScreen extends React.Component {
         </View>
         <Text style={styles.titleText}>Active task</Text>
         <ScrollView>
-          <FlatList data={this.state.items} renderItem={({item}) =>
-            <TouchableOpacity onPress={() => {
-            }}>
-              <View style={styles.button}>
-                <Text style={styles.buttonText}>{item.key}</Text>
-              </View>
-            </TouchableOpacity>
-          }
+          <FlatList data={this.state.items}
+                    scrollEnabled={this.state.enable}
+                    renderItem={({item}) =>
+                      (<ListItem text={item.key}
+                                 removeItem={key => this.handleRemoveItem(key)}
+                                 setScrollEnabled={enable => this.setScrollEnabled(enable)}/>)
+                    }
           />
         </ScrollView>
       </View>
     );
   }
-};
+}

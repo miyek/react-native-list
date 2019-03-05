@@ -1,6 +1,7 @@
 ---
   extends:
     - plugin:react/recommended
+    - react-native
 
   env:
     browser: true

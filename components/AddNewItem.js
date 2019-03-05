@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export class AddNewItem extends React.Component {
+export default class AddNewItem extends React.Component {
   constructor(props) {
     super(props);
 
