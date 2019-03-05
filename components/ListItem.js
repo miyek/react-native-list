@@ -13,7 +13,13 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     padding: 20,
-    color: Colors.buttonColor
+    color: Colors.buttonColor,
+  },
+  buttonTextChecked: {
+    padding: 20,
+    color: Colors.buttonColorChecked,
+    textDecorationLine: 'line-through',
+    textDecorationStyle: 'solid'
   },
   listItem: {
     marginLeft: -100,
@@ -32,7 +38,7 @@ const styles = StyleSheet.create({
     width,
     marginLeft: 100,
   },
-  deleteButton: {
+  statusButton: {
     padding: 20
   }
 });
@@ -70,14 +76,22 @@ export default class ListItem extends React.Component {
           }).start(() => {
             this.setScrollViewEnabled(true);
           });
-        } else {
+        } else if (this.props.checked) {
           Animated.timing(this.state.position, {
-            toValue: {x: width - 10, y: 0},
+            toValue: {x: 0, y: 0},
             duration: 300,
           }).start(() => {
             this.setScrollViewEnabled(true);
-            // todo: should first cross task next remove
             this.props.removeItem(this.props.text);
+          });
+        } else {
+          Animated.timing(this.state.position, {
+            toValue: {x: 0, y: 0},
+            duration: 0, // fixme: duration not refresh list
+          }).start(() => {
+            this.setScrollViewEnabled(true);
+            // todo: set checked
+            this.props.setChecked(this.props.text);
           });
         }
       },
@@ -98,16 +112,16 @@ export default class ListItem extends React.Component {
       <View style={styles.listItem}>
         <Animated.View style={[this.state.position.getLayout()]} {...this.panResponder.panHandlers}>
           <View style={styles.absoluteCell}>
-            <TouchableOpacity onPress={() => this.props.removeItem(this.props.text)
-            }>
-              <Icon.Ionicons style={styles.deleteButton}
-                             name="md-trash" size={24}></Icon.Ionicons>
-            </TouchableOpacity>
+            { this.props.checked ?
+              <Icon.Ionicons style={styles.statusButton} name="md-trash" size={24}/> :
+              <Icon.Ionicons style={styles.statusButton} name="md-checkmark-circle" size={24}/> }
           </View>
           <View style={styles.innerCell}>
             <TouchableOpacity onPress={() => ({})}>
               <View style={styles.button}>
-                <Text style={styles.buttonText}>{this.props.text}</Text>
+                <Text style={this.props.checked ? styles.buttonTextChecked : styles.buttonText}>
+                  {this.props.text}
+                </Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -119,6 +133,8 @@ export default class ListItem extends React.Component {
 
 ListItem.propTypes = {
   text: PropTypes.string,
+  checked: PropTypes.bool,
   setScrollEnabled: PropTypes.func,
   removeItem: PropTypes.func,
+  setChecked: PropTypes.func,
 };

@@ -35,14 +35,14 @@ export default class TaskScreen extends React.Component {
     super(props);
 
     const items = [
-      {key: 'Devin'},
-      {key: 'Jackson'},
-      {key: 'James'},
-      {key: 'Joel'},
-      {key: 'John'},
-      {key: 'Jillian'},
-      {key: 'Jimmy'},
-      {key: 'Julie'},
+      {key: 'Devin', checked: false },
+      {key: 'Jackson', checked: false },
+      {key: 'James', checked: false},
+      {key: 'Joel', checked: true},
+      {key: 'John', checked: false},
+      {key: 'Jillian', checked: false},
+      {key: 'Jimmy', checked: true},
+      {key: 'Julie', checked: false},
     ];
 
     this.state = {
@@ -52,7 +52,6 @@ export default class TaskScreen extends React.Component {
   }
 
   setScrollEnabled(enable) {
-    console.log(enable);
     this.setState({
       enable,
     });
@@ -71,6 +70,16 @@ export default class TaskScreen extends React.Component {
     }))
   }
 
+  handleCheckedItem(key) {
+    const itemIndex = this.state.items.findIndex(item => item.key === key);
+    const items = this.state.items;
+    items[itemIndex].checked = true;
+
+    this.setState(({
+      items
+    }));
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -83,7 +92,9 @@ export default class TaskScreen extends React.Component {
                     scrollEnabled={this.state.enable}
                     renderItem={({item}) =>
                       (<ListItem text={item.key}
+                                 checked={item.checked}
                                  removeItem={key => this.handleRemoveItem(key)}
+                                 setChecked={key => this.handleCheckedItem(key)}
                                  setScrollEnabled={enable => this.setScrollEnabled(enable)}/>)
                     }
           />

@@ -43,7 +43,7 @@ export default class AddNewItem extends React.Component {
   }
 
   addNewTask() {
-    const item = {key: this.state.newItem};
+    const item = {key: this.state.newItem, checked: false};
     this.clear();
     this.props.onAddNewItem(item);
   }
