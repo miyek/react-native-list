@@ -1,2 +1,2 @@
 # react-native-list
-Testing react native
+React native Task List app
