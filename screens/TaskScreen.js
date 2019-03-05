@@ -9,6 +9,7 @@ import {
   TextInput,
 } from 'react-native';
 import Colors from '../constants/Colors';
+import { AddNewItem } from '../components/AddNewItem';
 
 
 export default class TaskScreen extends React.Component {
@@ -30,46 +31,33 @@ export default class TaskScreen extends React.Component {
       {key: 'Julie'},
     ];
 
-    this.state =  {
-      newItem: 'Enter new task..',
+    this.state = {
       items
     };
   }
 
-  addNewTask() {
-    const item = { key: this.state.newItem };
-    const items = [ item, ...this.state.items];
+  handleNewItem(item) {
     this.setState({
-      newItem: null,
-      items
-    });
+      items: [ item, ...this.state.items]
+    })
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <View>
-          <TextInput
-            style={styles.input}
-            onChangeText={(newItem) => this.setState({newItem})}
-            value={this.state.newItem}
-          />
-          <TouchableOpacity onPress={()=>this.addNewTask()}>
-            <Text style={styles.addButton}>Add new task</Text>
-          </TouchableOpacity>
+        <View style={styles.header}>
+          <AddNewItem onAddNewItem={this.handleNewItem.bind(this)}/>
         </View>
+        <Text style={styles.titleText}>Active task</Text>
         <ScrollView>
-          <Text style={styles.titleText}>Actually task</Text>
-          <FlatList
-            data={this.state.items}
-            renderItem={({item}) =>
-              <TouchableOpacity onPress={() => {
-              }}>
-                <View style={styles.button}>
-                  <Text style={styles.buttonText}>{item.key}</Text>
-                </View>
-              </TouchableOpacity>
-            }
+          <FlatList data={this.state.items} renderItem={({item}) =>
+            <TouchableOpacity onPress={() => {
+            }}>
+              <View style={styles.button}>
+                <Text style={styles.buttonText}>{item.key}</Text>
+              </View>
+            </TouchableOpacity>
+          }
           />
         </ScrollView>
       </View>
@@ -78,33 +66,26 @@ export default class TaskScreen extends React.Component {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 0.5,
-    margin: 10,
-    padding: 10
-  },
-  addButton: {
-    margin: 10,
-    padding: 10,
-  },
-  titleText: {
-    fontSize: 16,
-    padding: 15,
-    backgroundColor: Colors.headerBackground,
-    color: Colors.headerColor,
-    fontWeight: "600"
-  },
-  button: {
-    marginBottom: 3,
-    backgroundColor: Colors.buttonBackground
-  },
-  buttonText: {
-    padding: 20,
-    color: Colors.buttonColor
-  }
-});
+    container: {
+      flex: 1,
+    },
+    header: {
+      height: 50
+    },
+    titleText: {
+      fontSize: 16,
+      padding: 15,
+      backgroundColor: Colors.headerBackground,
+      color: Colors.headerColor,
+      fontWeight: '600'
+    },
+    button: {
+      marginBottom: 3,
+      backgroundColor: Colors.buttonBackground
+    },
+    buttonText: {
+      padding: 20,
+      color: Colors.buttonColor
+    }
+  })
+;
