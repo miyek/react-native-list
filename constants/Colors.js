@@ -17,5 +17,6 @@ export default {
   headerBackground: '#fefefe',
   headerColor: textColor,
   buttonBackground: '#f9f9f9',
-  buttonColor: darkTintColor
+  buttonColor: darkTintColor,
+  buttonColorChecked: '#6c6c6c'
 };
